@@ -23,14 +23,19 @@ jobs:
       - name: Snyk monitor
         run: snyk code test --sarif-file-output=snyk.sarif
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}          
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        continue-on-error: true
       - name: Upload result to GitHub Code Scanning
+        if: always() && hashFiles('snyk.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk.sarif
+        continue-on-error: true
       - name: Upload HTML report as artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: snyk-code-test-report
           path: code-test-results.html
+        continue-on-error: true
 
