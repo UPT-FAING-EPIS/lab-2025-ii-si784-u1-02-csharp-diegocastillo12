@@ -1,0 +1,44 @@
+name: Release Version
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+      
+      - name: Restore dependencies
+        working-directory: Bank
+        run: dotnet restore
+      
+      - name: Build solution
+        working-directory: Bank
+        run: dotnet build --configuration Release --no-restore
+      
+      - name: Pack Bank.Domain
+        working-directory: Bank/Bank.Domain
+        run: dotnet pack --configuration Release --no-build --output ./nupkg /p:Version=${{ github.ref_name }}
+      
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: Bank/Bank.Domain/nupkg/*.nupkg
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

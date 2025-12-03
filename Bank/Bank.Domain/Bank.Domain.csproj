@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Authors>Diego Castillo</Authors>
+    <Company>Bank</Company>
+    <Version>1.0.0</Version>
+    <Description>Bank Domain Library - Biblioteca de dominio para el sistema bancario</Description>
+    <PackageProjectUrl>https://github.com/diegocastillo12/bank-domain</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/diegocastillo12/bank-domain</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>

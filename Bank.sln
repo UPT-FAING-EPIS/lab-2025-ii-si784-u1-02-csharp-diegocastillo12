@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bank", "Bank", "{D02FBF2C-7DEB-437F-BDFC-4D41AB28458A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.WebApi", "Bank\Bank.WebApi\Bank.WebApi.csproj", "{80DF50C3-B226-44E7-A597-C8377A74BBB4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.WebApi.Tests", "Bank\Bank.WebApi.Tests\Bank.WebApi.Tests.csproj", "{48BA103C-1977-4800-9A77-C36AE0D12AA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.Domain", "Bank\Bank.Domain\Bank.Domain.csproj", "{9236CAEE-0E53-4A56-9CCF-8773828475B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{80DF50C3-B226-44E7-A597-C8377A74BBB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80DF50C3-B226-44E7-A597-C8377A74BBB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80DF50C3-B226-44E7-A597-C8377A74BBB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80DF50C3-B226-44E7-A597-C8377A74BBB4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48BA103C-1977-4800-9A77-C36AE0D12AA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48BA103C-1977-4800-9A77-C36AE0D12AA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48BA103C-1977-4800-9A77-C36AE0D12AA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48BA103C-1977-4800-9A77-C36AE0D12AA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9236CAEE-0E53-4A56-9CCF-8773828475B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9236CAEE-0E53-4A56-9CCF-8773828475B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9236CAEE-0E53-4A56-9CCF-8773828475B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9236CAEE-0E53-4A56-9CCF-8773828475B0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{80DF50C3-B226-44E7-A597-C8377A74BBB4} = {D02FBF2C-7DEB-437F-BDFC-4D41AB28458A}
+		{48BA103C-1977-4800-9A77-C36AE0D12AA4} = {D02FBF2C-7DEB-437F-BDFC-4D41AB28458A}
+		{9236CAEE-0E53-4A56-9CCF-8773828475B0} = {D02FBF2C-7DEB-437F-BDFC-4D41AB28458A}
+	EndGlobalSection
+EndGlobal
