@@ -310,13 +310,93 @@ jobs:
 
 ---
 ## Actividades Encargadas
-1. Adicionar al archivo de snyk.yml los pasos necesarios para generar el reporte en formato HTML y subirlo como un artefacto en el resultado del job.
-2. Completar la documentación de todas las clases y generar una automatizaciòn .github/workflows/publish_docs.yml (Github Workflow) utilizando DocFx (init, metadata y build) y publicar el site de documentaciòn generado en un Github Page.
-3. Generar una automatización de nombre .github/workflows/package_nuget.yml (Github Workflow) que ejecute:
+
+### 1. Adicionar al archivo de snyk.yml los pasos necesarios para generar el reporte en formato HTML y subirlo como un artefacto en el resultado del job.
+
+**✅ COMPLETADO**
+
+Se ha implementado en el archivo `.github/workflows/snyk.yml`:
+- **Instalación de snyk-to-html**: Se instala la herramienta `snyk-to-html` mediante npm para convertir los resultados JSON a HTML.
+- **Generación del reporte HTML**: Se ejecuta `snyk code test --json | snyk-to-html -o code-test-results.html` para generar el reporte en formato HTML.
+- **Subida como artefacto**: Se utiliza `actions/upload-artifact@v4` para subir el archivo `code-test-results.html` como artefacto con el nombre `snyk-code-test-report`.
+
+**Archivo**: `.github/workflows/snyk.yml` (líneas 16-40)
+
+---
+
+### 2. Completar la documentación de todas las clases y generar una automatización .github/workflows/publish_docs.yml (Github Workflow) utilizando DocFx (init, metadata y build) y publicar el site de documentación generado en un Github Page.
+
+**✅ COMPLETADO**
+
+**Documentación de clases:**
+- La clase `BankAccount` en `Bank/Bank.Domain/BankAccount.cs` está completamente documentada con comentarios XML que incluyen:
+  - Descripción de la clase
+  - Documentación de constructores
+  - Documentación de propiedades (CustomerName, Balance)
+  - Documentación de métodos (Debit, Credit) con parámetros y excepciones
+- La clase `BankAccountTests` en `Bank/Bank.WebApi.Tests/BankAccountTests.cs` también está documentada.
+
+**Automatización DocFx:**
+Se ha creado el workflow `.github/workflows/publish_docs.yml` que incluye:
+- **Instalación de DocFx**: `dotnet tool install -g docfx`
+- **Verificación/Inicialización**: Verifica si existe `docfx.json`, si no existe ejecuta `docfx init -y`
+- **Generación de metadata**: Ejecuta `docfx metadata docfx.json` para extraer la documentación XML de los proyectos
+- **Build de documentación**: Ejecuta `docfx build docfx.json` para generar el sitio estático
+- **Publicación en GitHub Pages**: Utiliza `actions/upload-pages-artifact@v3` y `actions/deploy-pages@v4` para publicar el sitio en GitHub Pages
+
+**Archivo**: `.github/workflows/publish_docs.yml`
+
+---
+
+### 3. Generar una automatización de nombre .github/workflows/package_nuget.yml (Github Workflow) que ejecute:
    * Pruebas unitarias y reporte de pruebas automatizadas
    * Realice el analisis con SonarCloud.
    * Contruya un archivo .nuget a partir del proyecto Bank.Domain y lo publique como un Paquete de Github
-4. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que contruya la version (release) del paquete y publique en Github Releases e incluya pero ahi no esta el test unitarios
+
+**✅ COMPLETADO**
+
+Se ha creado el workflow `.github/workflows/package_nuget.yml` que incluye:
+
+**Pruebas unitarias y reporte:**
+- Ejecuta `dotnet test` con recolección de cobertura de código (`--collect:"XPlat Code Coverage"`)
+- Genera reporte de cobertura usando `ReportGenerator` con formato `MarkdownSummaryGithub`
+- Sube el reporte de cobertura como artefacto (`coverage-report`)
+
+**Análisis con SonarCloud:**
+- Instala `dotnet-sonarscanner`
+- Ejecuta `dotnet sonarscanner begin` con configuración de SonarCloud
+- Realiza el build para análisis
+- Ejecuta `dotnet sonarscanner end` para completar el análisis
+
+**Construcción y publicación de paquete NuGet:**
+- Construye el proyecto `Bank.Domain` en modo Release
+- Empaqueta el proyecto con `dotnet pack` generando archivos `.nupkg`
+- Publica el paquete en GitHub Packages usando `dotnet nuget push` con autenticación mediante `GITHUB_TOKEN`
+
+**Archivo**: `.github/workflows/package_nuget.yml`
+
+---
+
+### 4. Generar una automatización de nombre .github/workflows/release_version.yml (Github Workflow) que construya la version (release) del paquete y publique en Github Releases e incluya pero ahi no esta el test unitarios
+
+**✅ COMPLETADO**
+
+Se ha creado y actualizado el workflow `.github/workflows/release_version.yml` que incluye:
+
+**Pruebas unitarias:**
+- Ejecuta `dotnet test` con recolección de cobertura de código
+- Genera reporte de cobertura usando `ReportGenerator`
+- Sube el reporte de cobertura como artefacto (`test-coverage-report`)
+
+**Construcción y publicación de release:**
+- Se activa cuando se hace push de un tag con formato `v*` (ej: `v1.0.0`)
+- Construye la solución en modo Release
+- Empaqueta `Bank.Domain` con la versión extraída del tag (`/p:Version=${{ github.ref_name }}`)
+- Crea un release en GitHub Releases usando `softprops/action-gh-release@v1`
+- Adjunta el archivo `.nupkg` al release
+- Genera notas de release automáticamente
+
+**Archivo**: `.github/workflows/release_version.yml`
 
 
 
